@@ -434,5 +434,33 @@ function Dashboard() {
   spreadsheet.getRange('E6').activate();
 };
 
+function onOpen() {  
+  SpreadsheetApp.getUi()
+  .createMenu("Menu")
+  .addItem("getData",'merge')
+  .addItem("create",'insert')
+  .addToUi();
+}
+
+function insert() {
+  var spreadsheet = SpreadsheetApp.getActive();
+  var sheetName = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('ORDER GENERATOR');
+  var sheetRange = sheetName.getRange('B2').getValue();
+
+  spreadsheet.insertSheet();
+  spreadsheet.getActiveSheet().setName(sheetRange);
+
+  spreadsheet.getRange('A1').setValue('SAP Drug ID');
+  spreadsheet.getRange('B1').setValue('Drug Name');
+  spreadsheet.getRange('C1').setValue('Quantity');
+  spreadsheet.getRange('D1').setValue('Price');
+  spreadsheet.getRange('E1').setValue('Total');
+  spreadsheet.getRange('F1').setValue('Facility');
+  
+// sets the currency format
+  spreadsheet.getRange('E2:E').setNumberFormat("[$₦]#,##.00").setFormula('=if(A2="","",D2*C2)');
+
+  
+}
 
 
